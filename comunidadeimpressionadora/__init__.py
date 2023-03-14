@@ -23,7 +23,8 @@ login_manager.login_message = 'É necessário fazer login para acessar esta pág
 
 from comunidadeimpressionadora import models
 engine = sqlalchemy.create_engine(app.config['SQLALCHEMY_DATABASE_URI'])
-if not engine.has_table("usuario"):
+inspector = sqlalchemy.inspect(engine)
+if not inspector.has_table("usuario"):
     with app.app_context():
         database.drop_all()
         database.create_all()
@@ -32,3 +33,4 @@ else:
     print("Base de dados já existente")
 
 from comunidadeimpressionadora import routes
+
